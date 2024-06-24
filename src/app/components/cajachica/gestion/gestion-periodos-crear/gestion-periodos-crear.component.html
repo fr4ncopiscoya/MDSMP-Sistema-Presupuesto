@@ -1,0 +1,39 @@
+<div class="card-body pt-0 pb-0">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="lastNameinput" class="form-label">Fecha Inicio</label>
+                <input id="input-dfeinfi" type="date" class="form-control form-control-sm" max="{{getMaxDate()}}">
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="lastNameinput" class="form-label">Fecha Fin</label>
+                <input id="input-dfeinfi" type="date" class="form-control form-control-sm" max="{{getMaxDate()}}">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="lastNameinput" class="form-label">Periodo</label>
+                <input id="input-dfeinfi" type="date" class="form-control form-control-sm" max="{{getMaxDate()}}">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="" class="form-label">Monto </label>
+                <input (keypress)="validarNumero($event)" type="text" class="form-control form-control-sm "
+                    id="montoinfra" [inputMask]="currencyInputMask" placeholder="S/. 0.00" />
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <!-- <div class="text-end">
+                <button id="btn-anular" type="button" (click)="anularInformeFinal()"
+                    class="btn btn-danger show-hide">Anular</button>
+            </div> -->
+            <div class="text-end">
+                <button id="btn-guardar" type="button" class="btn btn-primary show-hide">Registrar</button>
+            </div>
+        </div>
+    </div>
+</div>

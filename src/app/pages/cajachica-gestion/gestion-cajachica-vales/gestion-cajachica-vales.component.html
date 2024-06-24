@@ -1,0 +1,126 @@
+<div class="main-content">
+    <div class="page-content">
+        <!-- <h3 style="text-align: center; border-bottom: 1px solid #000; margin-bottom: 20px;">MANTENIMIENTO CAJA CHICA</h3> -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                        <h4 class="mb-sm-0">GESTION - DATOS - VALES - {{this.datosCaja.ccp_id}} </h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-h-100">
+                        <div class="card-body">
+                            <div>
+                                <table id="tablaAplicacion" datatable [dtOptions]="dtOptionsModal"
+                                    [dtTrigger]="dtTrigger" class=" align-middle mb-0 " style="width: 100%;">
+                                    <thead class="table-light">
+                                        <tr style="font-size: 12px;">
+                                            <th class="text-center">Nº Vale</th>
+                                            <th class="text-center">Fecha Apertura</th>
+                                            <th class="text-center">Fecha Inicio</th>
+                                            <th class="text-center">Fecha Cierre</th>
+                                            <th class="text-center">Monto Vale</th>
+                                            <th class="text-center">Monto Rendido</th>
+                                            <th class="text-center">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="overflow-y: scroll;">
+                                        <tr ngClass="" *ngFor="let data of datosCajaChicaVales; let i = index"
+                                            class="text-center tr_hover">
+                                            <td>{{ data.ccv_numero }}</td>
+                                            <td>{{ data.ccp_fecape | date: 'dd/MM/yyyy' }}</td>
+                                            <td>{{ data.ccv_feciva | date: 'dd/MM/yyyy' }}</td>
+                                            <td>{{ data.ccv_feccva | date: 'dd/MM/yyyy' }}</td>
+                                            <td>{{ data.ccv_monval | number : "1.2-2"}}</td>
+                                            <td>{{ data.ccv_mongas | number : '1.2-2' }}</td>
+                                            <td>
+                                                <button type="button" (click)="modalCajaCrearVale(modalCrearVale,data)"
+                                                    style="padding: 2px 5px; margin: 2px 0px; " title="Editar"
+                                                    class="btn btn-primary btn-sm">
+                                                    <i class="ri-pencil-fill"></i>
+                                                </button>
+                                                <button type="button" style="padding: 2px 5px; margin: 2px 5px; "
+                                                    class="btn btn-success btn-sm" title="Gastos"
+                                                    (click)="goAperturaGastos(data)">
+                                                    G
+                                                </button>
+                                                <button type="button" style="padding: 2px 5px; margin: 2px 0px; "
+                                                    title="Gastos" class="btn btn-warning btn-sm">
+                                                    C
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card container-fluid">
+            <div class="row">
+                <div class="mb-3 col-sm-4">
+                    <!-- <label for="" class="form-label col-form-label-sm">Inspector Municipal</label>
+                    <input oninput="this.value = this.value.toUpperCase()" type="text"
+                        class="form-control form-control-sm" id="employeeUrl" placeholder="" /> -->
+                </div>
+                <div class="mb-3 col-sm-2">
+                    <!-- <label for="" class="form-label col-form-label-sm">Nº de Informes</label>
+                    <input type="text" oninput="this.value = this.value.toUpperCase()"
+                        (keypress)="validarNumero($event)" class="form-control form-control-sm" id="employeeUrl"
+                        placeholder="" /> -->
+                </div>
+                <div class="col-sm-2" style="display: flex; align-items: center"></div>
+                <div class="col-sm-2" style="padding: 10px; display: flex; justify-content: right;">
+                    <button type="button" (click)="modalCajaCrearVale(modalCrearVale,null)"
+                        class="btn btn-primary btn-label btn btn-sm">
+                        <i class="ri-save-3-line label-icon align-middle fs-16"></i>
+                        Nuevo
+                    </button>
+                </div>
+                <div class="col-sm-2" style="padding: 10px; display: flex; justify-content: left;">
+                    <button [routerLink]="['/cajachica-gestion']" type="button"
+                        class="btn btn-danger btn-label btn btn-sm">
+                        <i class="ri-close-fill label-icon align-middle fs-16"></i>
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #modalCrearVale>
+    <div class="col-lg-12">
+        <div class="row">
+            <!-- <form> -->
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header" style="display: flex; justify-content: space-between;">
+                        <h4 class="card-title mb-0" style="font-weight: bold;">{{text_vales}}</h4>
+                        <a class="" (click)="cerrarModal('modalCajaValesCrear')" style="cursor: pointer;"> <i
+                                style="font-size: 1.50rem; " class=" ri-close-fill"></i></a>
+                    </div>
+                    <div class="card-body">
+                        <app-gestion-vales-crear (valeRegistrado)="actualizarVales()"></app-gestion-vales-crear>
+                    </div>
+                </div>
+            </div>
+            <!-- </form> -->
+        </div>
+    </div>
+</ng-template>
+
+
+
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-square-spin" [fullScreen]="false">
+    <p style="color: white">Buscando información...</p>
+</ngx-spinner>

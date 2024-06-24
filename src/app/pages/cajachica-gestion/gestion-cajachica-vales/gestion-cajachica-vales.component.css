@@ -1,0 +1,8 @@
+thead.table-light {
+    background-color: #20529d;
+    color: white;
+}
+
+tbody td {
+    border: 1px solid #cecece;
+}

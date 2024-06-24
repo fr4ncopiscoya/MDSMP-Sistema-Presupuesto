@@ -1,0 +1,153 @@
+<div class="card-body">
+    <div class="row">
+
+        <!-- Row1 -->
+        <div class="col-md-7 mb-2">
+            <label for="" class="form-label col-form-label col-form-label-sm">Tipo Doc.</label>
+            <select id="mrf_id" class="form-select form-select-sm" (change)="onSelectionChangeTipDocIde($event)">
+                <option [value]="0">Seleccionar</option>
+                <option *ngFor="let data of dataTipoDocIde" [value]="data.tdi_id">
+                    {{data.tdi_descri}}
+                </option>
+            </select>
+            <!-- <div class="mb-3 col-sm-2">
+                <label for="" class="form-label col-form-label col-form-label-sm">Filtro Fechas</label>
+                <select id="mrf_id" class="form-select form-select-sm" [(ngModel)]="mrf_id" (change)="busquedaTipoFecha()">
+                  <option [value]="0">Seleccionar</option>
+                  <option *ngFor="let data of datosFechas" [value]="data.mrf_id">
+                    {{data.mrf_descri}}
+                  </option>
+                </select>
+              </div> -->
+        </div>
+        <div class="col-md-5 mb-2">
+            <!-- <div class="mb-3"> -->
+            <label for="" class="form-label col-form-label col-form-label-sm">Número Doc. </label>
+            <!-- <div class="" style="display: flex;"> -->
+            <div class="">
+                <input type="text" class="form-control form-control-sm" id="montoinfra" ngClass="disabled-color" />
+            </div>
+            <!-- <div class="" style="width: 80%; margin-left: 5px;">
+                    <input type="text" class="form-control form-control-sm" id="montoinfra" ngClass="disabled-color" />
+                </div> -->
+            <!-- </div> -->
+        </div>
+
+        <!-- Row2 -->
+        <div class="col-md-3 mb-2" *ngIf="tdi_id !== '2'">
+            <label for="" class=" form-label col-form-label col-form-label-sm">Apellido Paterno</label>
+            <input id="" type="text" class="form-control form-control-sm disabled-color">
+        </div>
+        <div class="col-md-3 mb-2" *ngIf="tdi_id !== '2'">
+            <label for="" class=" form-label col-form-label col-form-label-sm">Apellido Materno</label>
+            <input id="" type="text" class="form-control form-control-sm disabled-color">
+        </div>
+        <div class="col-md-6 mb-2" *ngIf="tdi_id !== '2'">
+            <label for="" class=" form-label col-form-label col-form-label-sm">Nombre</label>
+            <input id="" type="text" class="form-control form-control-sm disabled-color">
+        </div>
+        <div class="col-md-12 mb-2" *ngIf="tdi_id === '2'">
+            <label for="" class="form-label col-form-label col-form-label-sm">Nombre o Razón Social</label>
+            <input id="" type="text" class="form-control form-control-sm disabled-color">
+        </div>
+
+        <!-- Row 3 -->
+        <div class="col-md-4 mb-2">
+            <label for="" class="form-label col-form-label col-form-label-sm">Tipo Doc.</label>
+            <select [(ngModel)]="ccd_id" class="form-select form-select-sm">
+                <!-- <option [value]="0">Seleccionar</option> -->
+                <option *ngFor="let data of dataTipoDoc" [value]="data.ccd_id">
+                    {{data.ccd_descri}}
+                </option>
+            </select>
+        </div>
+        <div class="col-md-3 mb-2">
+            <div class="">
+                <label for="" class="form-label col-form-label col-form-label-sm">Fecha Doc.</label>
+                <input type="date" class="form-control form-control-sm">
+            </div>
+        </div>
+        <div class="col-md-5 mb-2">
+            <div class="">
+                <label for="" class="form-label col-form-label col-form-label-sm">Número Doc.</label>
+                <div class="" style="display: flex;">
+                    <div class="" style="width: 40%;">
+                        <input id="" type="number" class="form-control form-control-sm disabled-color">
+                    </div>
+                    <div class="" style="margin-left: 5px;">
+                        <input id="" type="number" class="form-control form-control-sm disabled-color">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 mb-2">
+            <label for="" class="form-label col-form-label col-form-label-sm">Descripción</label>
+            <input id="" type="text" class="form-control form-control-sm disabled-color">
+        </div>
+
+        <!-- Row4 -->
+        <div class="col-md-12 mb-2">
+            <label for="" class="form-label col-form-label col-form-label-sm">Tipo Rubro</label>
+            <select [(ngModel)]="ccr_id" class="form-select form-select-sm">
+                <option [value]="0">Seleccionar</option>
+                <option *ngFor="let data of dataRubro" [value]="data.ccr_id">
+                    {{data.ccr_descri}}
+                </option>
+            </select>
+        </div>
+
+        <!-- Row5 -->
+        <div class="col-md-12 mb-2">
+            <label for="" class="form-label col-form-label col-form-label-sm">Partida</label>
+            <div class="" style="display: flex;">
+                <div class="">
+                    <input type="text" class="form-control form-control-sm" id="montoinfra" ngClass="disabled-color" />
+                </div>
+                <div class="" style="width: 80%; margin-left: 5px;">
+                    <input type="text" class="form-control form-control-sm" id="montoinfra" ngClass="disabled-color" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Row6 -->
+        <div class="col-md-12 mb-2">
+            <label for="" class="form-label col-form-label col-form-label-sm">Area</label>
+            <select id="mrf_id" class="form-select form-select-sm">
+                <option [value]="0">Seleccionar</option>
+                <option *ngFor="let data of dataArea" [value]="ard_id">
+                    {{data.ard_descri}}
+                </option>
+            </select>
+        </div>
+
+
+        <!-- Row7 -->
+        <div class="col-md-12">
+            <div class="" style="display: flex;">
+                <div class="col-md-3">
+                    <label for="" class="form-label col-sm-6 col-form-label-sm">Monto </label>
+                    <input type="text" class="form-control form-control-sm" id="montoinfra" ngClass="disabled-color" />
+                </div>
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-3" style="margin-top: 25px;">
+                    <!-- <div class="text-end">
+                        <button id="btn-anular" type="button" (click)="anularInformeFinal()"
+                            class="btn btn-warning show-hide">Editar</button>
+                    </div> -->
+                    <div class="text-end">
+                        <button id="btn-guardar" type="button" class="btn btn-primary show-hide">Guardar</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
