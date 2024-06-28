@@ -3,7 +3,8 @@
         <div class="col-md-6">
             <div class="mb-3">
                 <label for="lastNameinput" class="form-label">Fecha Inicio Vale</label>
-                <input id="input-dfeinfi" type="date" class="form-control form-control-sm" max="{{getMaxDate()}}"
+                <input id="input-dfeinfi" type="date" [ngClass]="{'disabled-color':btnVerData === false}"
+                    [disabled]="btnVerData === false" class="form-control form-control-sm" max="{{getMaxDate()}}"
                     [(ngModel)]="ccv_feciva">
             </div>
             <div *ngIf="error === 'Fecha Informe Final, Invalida'" class="text-danger">Campo obligatorio *</div>
@@ -11,8 +12,8 @@
         <div class="col-md-6">
             <div class="mb-3">
                 <label for="lastNameinput" class="form-label">Fecha Cierre Vale</label>
-                <input id="input-dfeinfi" type="date" class="form-control form-control-sm" max="{{getMaxDate()}}"
-                    [(ngModel)]="ccv_feccva">
+                <input id="input-dfeinfi" type="date" [ngClass]="{'disabled-color':btnVerData === false}"
+                    [disabled]="btnVerData === false" class=" form-control form-control-sm" [(ngModel)]="ccv_feccva">
             </div>
             <div *ngIf="error === 'Fecha Informe Final, Invalida'" class="text-danger">Campo obligatorio *</div>
 
@@ -20,20 +21,17 @@
         <div class="col-md-6">
             <div class="mb-3">
                 <label for="" class="form-label">Número Vale</label>
-                <input id="input-cnuinfi" type="text" [(ngModel)]="ccv_numero" maxlength="8"
-                    class="form-control form-control-sm">
+                <input id="input-cnuinfi" type="text" [ngClass]="{'disabled-color': ccv_id > 0}" [disabled]="ccv_id > 0"
+                    [(ngModel)]="ccv_numero" maxlength="8" class="form-control form-control-sm">
             </div>
         </div>
         <div class="col-md-6">
             <div class="mb-3">
                 <label for="" class="form-label">Monto </label>
-                <input [ngModel]="ccv_monval " (keypress)="validarNumero($event)" (ngModelChange)="ccv_monval = $event"
-                    type="text" class="form-control form-control-sm " id="montoinfra" [inputMask]="currencyInputMask"
-                    placeholder="S/. 0.00" />
-                <div *ngIf="error === 'Monto Infraccion no puede ser CERO'" class="text-danger">Campo Obligatorio *
-                </div>
-                <div *ngIf="error === 'Monto Infraccion no puede ser CERO'" class="text-danger">Campo Obligatorio *
-                </div>
+                <input [ngModel]="ccv_monval " [ngClass]="{'disabled-color': btnVerData === false}"
+                    [disabled]="btnVerData === false" (keypress)="validarNumero($event)"
+                    (ngModelChange)="ccv_monval = $event" type="text" class="form-control form-control-sm "
+                    id="montoinfra" [inputMask]="currencyInputMask" placeholder="S/. 0.00" />
             </div>
             <div *ngIf="error === 'Fecha Informe Final, Invalida'" class="text-danger">Campo obligatorio *</div>
 
@@ -50,7 +48,8 @@
         <div class="col-md-12">
             <div class="mb-3">
                 <label for="" class="form-label">Area</label>
-                <select id="mrf_id" class="form-select form-select-sm">
+                <select [(ngModel)]="ard_id" [ngClass]="{'disabled-color': ccv_id > 0}" [disabled]="ccv_id > 0"
+                    class="form-select form-select-sm">
                     <option [value]="0">Seleccionar</option>
                     <option *ngFor="let data of dataArea" [value]="data.ard_id">
                         {{data.ard_descri}}
@@ -60,10 +59,11 @@
         </div>
 
         <div class="col-md-12">
-            <div class="">
+            <div class="mb-3">
                 <label for="" class="form-label">Observaciones</label>
-                <input type="text" class="form-control form-control-sm" id="montoinfra"
-                    oninput="this.value = this.value.toUpperCase()" [(ngModel)]="ccv_observ" ngClass="disabled-color" />
+                <input type="text" [ngClass]="{'disabled-color':btnVerData === false}" [disabled]="btnVerData === false"
+                    class="form-control form-control-sm" id="montoinfra" oninput="this.value = this.value.toUpperCase()"
+                    [(ngModel)]="ccv_observ" />
                 <div *ngIf="error === 'Monto Infraccion no puede ser CERO'" class="text-danger">Campo Obligatorio *
                 </div>
             </div>
@@ -73,9 +73,9 @@
                 <button id="btn-anular" type="button" (click)="anularInformeFinal()"
                     class="btn btn-danger show-hide">Anular</button>
             </div> -->
-            <div class="text-end">
+            <div class="text-end" *ngIf="btnVerData">
                 <button id="btn-guardar" type="button" (click)="registrarVales()"
-                    class="btn btn-primary show-hide">{{txt_button}}</button>
+                    [ngClass]="{'btn': true,'btn-primary': ccv_id === 0, 'btn-info': ccv_id > 0}">{{txt_button}}</button>
             </div>
         </div>
     </div>

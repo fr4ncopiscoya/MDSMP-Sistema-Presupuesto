@@ -10,9 +10,11 @@ import { HttpClientUtils } from '../utils/http-client.utils';
 export class CajachicaService {
 
   dataCaja: any
+  dataCajachica: any
   dataCajaVales: any
+  dataCajaAny: any
 
-  cca_anyper: string
+  cca_anyper: number
   cca_id: number
 
   constructor(private httpClientUtils: HttpClientUtils, private http: HttpClient) { }
@@ -40,6 +42,16 @@ export class CajachicaService {
   listarCajaAnual(data: any) {
     return this.httpClientUtils
       .postQuery('cajachica/gestion/listar-any', data)
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  consultarPide(data: any) {
+    return this.httpClientUtils
+      .postQueryPide('persona/buscar', data)
       .pipe(
         map((data) => {
           return data;
@@ -77,6 +89,56 @@ export class CajachicaService {
       );
   }
 
+  registrarCajaAny(data: any) {
+    return this.httpClientUtils
+      .postQuery('cajachica/gestion/registrar-any', data)
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  registrarApertura(data: any) {
+    return this.httpClientUtils
+      .postQuery('cajachica/gestion/registrar-apertura', data)
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  cerrarCajaPeriodo(data: any) {
+    return this.httpClientUtils
+      .postQuery('cajachica/gestion/cerrar-periodo', data)
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  cerrarCajaApertura(data: any) {
+    return this.httpClientUtils
+      .postQuery('cajachica/gestion/cerrar-apertura', data)
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  cerrarVale(data: any) {
+    return this.httpClientUtils
+      .postQuery('cajachica/gestion/cerrar-vale', data)
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
   listarCajaVales(data: any) {
     return this.httpClientUtils
       .postQuery('cajachica/gestion/vales', data)
@@ -99,7 +161,7 @@ export class CajachicaService {
 
   listarTipoDocumentoIdentidad(data: any) {
     return this.httpClientUtils
-      .postQuery('cajachica/gestion/listar/tipo-documento-identidad', data)
+      .postQuery('cajachica/listar/tipo-documento-identidad', data)
       .pipe(
         map((data) => {
           return data;
@@ -109,7 +171,7 @@ export class CajachicaService {
 
   listarTipoDocumento(data: any) {
     return this.httpClientUtils
-      .postQuery('cajachica/listar/tipo-documento', data)
+      .postQuery('cajachica/gestion/listar/tipo-documento', data)
       .pipe(
         map((data) => {
           return data;

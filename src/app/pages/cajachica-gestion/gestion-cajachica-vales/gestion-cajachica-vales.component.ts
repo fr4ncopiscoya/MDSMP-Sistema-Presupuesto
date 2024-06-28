@@ -55,6 +55,7 @@ export class GestionCajachicaValesComponent implements OnInit {
   data: any;
   datosCaja: any;
   datosCajaChicaVales: any;
+  dataUsuario: any
 
   ccp_id: number | undefined;
 
@@ -65,9 +66,9 @@ export class GestionCajachicaValesComponent implements OnInit {
   ccv_monval: string = ''
   ccv_observ: string = ''
 
-  error: string = ''
+  mensa: string = ''
 
-
+  btnVerData: boolean;
   text_vales: string = ''
 
   constructor(
@@ -78,7 +79,8 @@ export class GestionCajachicaValesComponent implements OnInit {
     private cajachicaService: CajachicaService,
   ) {
     this.appComponent.login = false;
-    // this.dataUsuario = localStorage.getItem('dataUsuario');
+    const dataUser = localStorage.getItem('dataUsuario');
+    this.dataUsuario = JSON.parse(dataUser)
     const dataCaja = localStorage.getItem('data');
     if (dataCaja !== null) {
       try {
@@ -103,6 +105,7 @@ export class GestionCajachicaValesComponent implements OnInit {
       // columnDefs: [
       //   { width: '500px', targets: 2 },
       // ],
+      order: [0, 'desc'],
       language: {
         url: "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
       },
@@ -143,7 +146,7 @@ export class GestionCajachicaValesComponent implements OnInit {
   }
 
   // Método para mostrar el modal y configurar el valor de ccv_id
-  modalCajaCrearVale(template: TemplateRef<any>, data: any) {
+  modalCajaCrearVale(template: TemplateRef<any>, data: any, ver: boolean) {
     let value = 0;
 
     // Si hay data y ccv_id está definido, usar ese valor
@@ -152,6 +155,10 @@ export class GestionCajachicaValesComponent implements OnInit {
     }
 
     this.textValue(value);
+    this.btnVerData = ver
+    if (this.btnVerData === false) {
+      this.text_vales = 'Ver'
+    }
     this.modalRefs['modalCajaValesCrear'] = this.modalService.show(template, { id: 1, class: '', backdrop: 'static', keyboard: false }
     );
   }
@@ -188,35 +195,50 @@ export class GestionCajachicaValesComponent implements OnInit {
 
 
   // ================== MENSAJES SWEETALERT =====================
-  private getIconByErrorCode(errorCode: string): 'error' | 'warning' | 'info' | 'success' {
-    switch (errorCode) {
-      case '-100':
-        return 'error';
-      case '-101':
-        return 'error';
-      case '-102':
-        return 'error';
-      case '-103':
-        return 'error';
-      case '-104':
-        return 'error';
-      case '-105':
-        return 'error';
-      case '0':
-        return 'success';
-      default:
-        return 'error';
+  private getIconByErrorCode(errorCode: number): 'error' | 'warning' | 'info' | 'success' {
+    if (errorCode < 0 || errorCode === 999) {
+      return 'error';
     }
+    if (errorCode === 0) {
+      return 'success';
+    }
+    // Puedes agregar más condiciones aquí para otros códigos de error y sus iconos correspondientes
+    return 'info'; // Valor por defecto si no se cumple ninguna condición
   }
 
-  private errorSweetAlert(icon: 'error' | 'warning' | 'info' | 'success' = 'error') {
+  private errorSweetAlert(icon: 'error' | 'warning' | 'info' | 'success' = 'error', callback?: () => void) {
     Swal.fire({
       icon: icon,
-      text: this.error || 'Hubo un error al procesar la solicitud',
+      text: this.mensa || 'Hubo un error al procesar la solicitud',
+    }).then((result) => {
+      if (result.isConfirmed && callback) {
+        callback();
+      }
     });
   }
 
+  public sweetAlertValidar(data: any, title_val: string, confirmButtonText_val: string) {
+    console.log("data-validar: ", data);
 
+    Swal.fire({
+      // title: "Estas seguro de anular esta resolución?",
+      title: title_val,
+      text: "No podrás deshacer esto!",
+      // text: text_val,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: confirmButtonText_val
+      // confirmButtonText: "Si, anular"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log("llegas modal", data.ccv_id);
+
+        this.cerrarVale(data.ccv_id);
+      }
+    });
+  }
 
 
 
@@ -227,12 +249,17 @@ export class GestionCajachicaValesComponent implements OnInit {
     this.ccv_id = data.ccv_id
   }
 
+  goBackTo() {
+    switch (this.mensa) {
+      case 'Cierre Vale Actualizada Correctamente':
+        this.consultarCajaChicaVales()
+    }
+  }
+
   consultarCajaChicaVales() {
     let post = {
       p_ccv_id: 0,
       p_ccp_id: this.datosCaja.ccp_id,
-      // p_cca_fecini: this.p_ccv_fecini,
-      // p_cca_fecfin: this.p_ccv_fecfin,
     };
 
     console.log(post);
@@ -256,6 +283,24 @@ export class GestionCajachicaValesComponent implements OnInit {
       },
     });
 
+  }
+
+  cerrarVale(ccv_id: number) {
+    console.log("entras");
+
+    let post = {
+      p_ccv_id: ccv_id,
+      p_ccv_usumov: this.dataUsuario.numid
+    }
+    this.cajachicaService.cerrarVale(post).subscribe({
+      next: (data: any) => {
+        console.log("result-vale:", data);
+        this.mensa = data[0].mensa
+        const errorCode = data[0].error
+        const icon = this.getIconByErrorCode(errorCode)
+        this.errorSweetAlert(icon, this.goBackTo.bind(this))
+      }
+    })
   }
 
   actualizarVales() {

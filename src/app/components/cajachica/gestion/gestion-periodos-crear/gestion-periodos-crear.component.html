@@ -2,28 +2,18 @@
     <div class="row">
         <div class="col-md-6">
             <div class="mb-3">
-                <label for="lastNameinput" class="form-label">Fecha Inicio</label>
-                <input id="input-dfeinfi" type="date" class="form-control form-control-sm" max="{{getMaxDate()}}">
-            </div>
-
-        </div>
-        <div class="col-md-6">
-            <div class="mb-3">
-                <label for="lastNameinput" class="form-label">Fecha Fin</label>
-                <input id="input-dfeinfi" type="date" class="form-control form-control-sm" max="{{getMaxDate()}}">
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="mb-3">
                 <label for="lastNameinput" class="form-label">Periodo</label>
-                <input id="input-dfeinfi" type="date" class="form-control form-control-sm" max="{{getMaxDate()}}">
+                <input id="input-dfeinfi" (keypress)="validarNumero($event)" [disabled]="cca_id > 0"
+                    [ngClass]="{'disabled-color': cca_id > 0}" [(ngModel)]="cca_anyper" placeholder="Ejm: {{yearVal}}"
+                    type="number" class="form-control form-control-sm">
             </div>
         </div>
         <div class="col-md-6">
             <div class="mb-3">
                 <label for="" class="form-label">Monto </label>
-                <input (keypress)="validarNumero($event)" type="text" class="form-control form-control-sm "
-                    id="montoinfra" [inputMask]="currencyInputMask" placeholder="S/. 0.00" />
+                <input (keypress)="validarNumero($event)" [(ngModel)]="cca_montot" type="text"
+                    class="form-control form-control-sm " id="montoinfra" [inputMask]="currencyInputMask"
+                    placeholder="S/. 0.00" />
             </div>
         </div>
         <div class="col-lg-12">
@@ -32,7 +22,10 @@
                     class="btn btn-danger show-hide">Anular</button>
             </div> -->
             <div class="text-end">
-                <button id="btn-guardar" type="button" class="btn btn-primary show-hide">Registrar</button>
+                <button id="btn-guardar" (click)="this.registrarCajaAny()" type="button" [ngClass]="{
+                        'btn': true,
+                        'btn-primary': cca_id === 0,
+                        'btn-info': cca_id > 0 }">{{txt_button}}</button>
             </div>
         </div>
     </div>

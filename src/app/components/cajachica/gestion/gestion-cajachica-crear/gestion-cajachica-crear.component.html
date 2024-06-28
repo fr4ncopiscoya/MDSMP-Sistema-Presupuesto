@@ -1,1 +1,45 @@
-<p>gestion-cajachica-crear works!</p>
+<div class="card-body pt-0 pb-0">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="" class="form-label">Número</label>
+                <input [(ngModel)]="ccp_numape" [ngClass]="{'disabled-color': ccp_id > 0}" [disabled]="ccp_id > 0"
+                    type="text" class="form-control form-control-sm">
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="mb-3">
+                <label for="" class="form-label">Fecha</label>
+                <input id="input-dfeinfi" [(ngModel)]="ccp_fecape" [ngClass]="{'disabled-color': verBtnModal === false}"
+                    [disabled]="verBtnModal === false" type="date" class="form-control form-control-sm"
+                    max="{{getMaxDate()}}">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label for="" class="form-label">Monto </label>
+                <input (keypress)="validarNumero($event)" [(ngModel)]="cca_monape"
+                    [ngClass]="{'disabled-color': verBtnModal === false}" [disabled]="verBtnModal === false" type="text"
+                    class="form-control form-control-sm " id="montoinfra" [inputMask]="currencyInputMask"
+                    placeholder="S/. 0.00" />
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="mb-3">
+                <label for="" class="form-label">Observación</label>
+                <input [(ngModel)]="ccp_observ" [ngClass]="{'disabled-color': verBtnModal === false}"
+                    [disabled]="verBtnModal === false" oninput="this.value = this.value.toUpperCase()" type="text"
+                    class="form-control form-control-sm">
+            </div>
+        </div>
+        <div *ngIf="verBtnModal" class="col-lg-12">
+            <div class="text-end">
+                <button id="btn-guardar" [ngClass]="{
+                    'btn': true,
+                    'btn-primary': ccp_id === 0,
+                    'btn-info': ccp_id > 0
+                }" (click)="this.registrarApertura()" type="button">{{txtBtn}}</button>
+            </div>
+        </div>
+    </div>
+</div>

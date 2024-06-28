@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, Output, Input, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SigtaService } from 'src/app/services/sigta.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -15,6 +15,7 @@ import { GestionCajachicaComponent } from 'src/app/pages/cajachica-gestion/gesti
 })
 export class GestionValesCrearComponent implements OnInit {
 
+  @Input() btnVerData: boolean
   @Output() valeRegistrado = new EventEmitter<string>();
 
   modalRefs: { [key: string]: BsModalRef } = {}; // Objeto para almacenar los modalRefs
@@ -42,6 +43,7 @@ export class GestionValesCrearComponent implements OnInit {
   ccv_feccva: string = ''
   ccv_monval: string = ''
   ccv_observ: string = ''
+  ard_id: number;
 
   txt_button: string = ''
 
@@ -83,6 +85,8 @@ export class GestionValesCrearComponent implements OnInit {
       this.ccv_feciva = this.datosVale.ccv_feciva
       this.ccv_monval = this.datosVale.ccv_monval
       this.ccv_observ = this.datosVale.ccv_observ
+      this.ard_id = this.datosVale.ard_id
+
     } else {
     }
   }
@@ -93,6 +97,7 @@ export class GestionValesCrearComponent implements OnInit {
     } else {
       this.txt_button = 'Registrar'
     }
+    console.log("btn-ver", this.btnVerData);
     this.listarArea();
   }
 
@@ -241,6 +246,7 @@ export class GestionValesCrearComponent implements OnInit {
     let post = {
       p_ccv_id: this.ccv_id,
       p_ccp_id: this.datosCaja.ccp_id,
+      p_ard_id: this.ard_id,
       p_ccv_numero: this.ccv_numero,
       p_ccv_feciva: this.ccv_feciva,
       p_ccv_feccva: this.ccv_feccva,

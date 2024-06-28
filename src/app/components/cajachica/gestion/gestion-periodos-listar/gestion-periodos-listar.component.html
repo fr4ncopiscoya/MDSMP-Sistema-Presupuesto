@@ -26,22 +26,21 @@
                                 <td>{{ data.cca_montot | number: '1.2-2' }}</td>
                                 <!-- <td>{{ data.cca_monval | number: '1.2-2' }}</td> -->
                                 <td>
-                                    <button type="button" style="padding: 2px 5px; margin: 2px 5px; "
-                                        class="btn btn-primary btn-sm">
+                                    <button type="button" (click)="emitir(data.cca_anyper)"
+                                        style="padding: 2px 5px; margin: 2px 5px; " class="btn btn-primary btn-sm">
                                         <i class="ri-check-fill"></i>
                                     </button>
                                     <button type="button" style="padding: 2px 5px; margin: 2px 0px; " title="Editar"
-                                        class="btn btn-info btn-sm" (click)="modalListarPeriodo(listarPeriodo, data)">
+                                        class="btn btn-info btn-sm"
+                                        (click)="modalRegistrarPeriodo(registrarPeriodo, data)">
                                         <i class="ri-pencil-fill"></i>
                                     </button>
-                                    <!-- <button type="button" style="padding: 2px 5px; margin: 2px 5px; " title="Vales"
-                                        class="btn btn-success btn-sm">
-                                        V
-                                    </button>
-                                    <button type="button" style="padding: 2px 5px; margin: 2px 0px; " title="Cierre"
+                                    <button type="button"
+                                        (click)="sweetAlertValidar(data,'Estas seguro de cerrar esta caja?', 'Si, cerrar caja')"
+                                        style="padding: 2px 5px; margin: 2px 5px; " title="Cierre"
                                         class="btn btn-warning btn-sm">
                                         C
-                                    </button> -->
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -50,7 +49,7 @@
             </div>
             <div class="" style="padding: 10px; display: flex; justify-content: left;">
                 <button type="button" class="btn btn-primary btn-label btn btn-sm"
-                    (click)="modalListarPeriodo(listarPeriodo,'')">
+                    (click)="modalRegistrarPeriodo(registrarPeriodo,null)">
                     <i class="ri-save-3-line label-icon align-middle fs-16"></i>
                     Nuevo
                 </button>
@@ -60,17 +59,17 @@
 </div>
 
 
-<ng-template #listarPeriodo>
+<ng-template #registrarPeriodo>
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header" style="display: flex; justify-content: space-between;">
-                    <h4 class="card-title mb-0">Registar Periodo</h4>
+                    <h4 class="card-title mb-0">{{text_tittle}}</h4>
                     <a class="" style="cursor: pointer;" (click)="cerrarModal('crear-periodo')"> <i
                             style="font-size: 1.50rem; " class=" ri-close-fill"></i></a>
                 </div>
                 <div class="card-body">
-                    <app-gestion-periodos-crear></app-gestion-periodos-crear>
+                    <app-gestion-periodos-crear (periodoRegistrado)="actualizarData()"></app-gestion-periodos-crear>
                 </div>
             </div>
         </div>

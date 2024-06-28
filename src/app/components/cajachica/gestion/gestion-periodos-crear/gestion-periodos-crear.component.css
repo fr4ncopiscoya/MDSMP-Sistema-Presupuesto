@@ -1,0 +1,33 @@
+/* .btn-primary {
+    color: #FFFFFF;
+    background-color: #438eff;
+    font-family: 14.5008px Gantari, sans-serif;
+    padding: 9.6px 14.4px;
+    border: 1px;
+    border-radius: 4px;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #3979d9;
+    border-color: #3672cc;
+}
+
+.btn-info {
+    color: #FFFFFF;
+    background-color: #4AB0C1;
+    font-family: 14.5008px Gantari, sans-serif;
+    padding: 9.6px 14.4px;
+    border: 1px;
+    border-radius: 4px;
+}
+
+.btn-info:hover {
+    color: #fff;
+    background-color: #3f96a4;
+    border-color: #3b8d9a;
+} */
+
+.disabled-color {
+    background-color: #e1e1e1;
+}
