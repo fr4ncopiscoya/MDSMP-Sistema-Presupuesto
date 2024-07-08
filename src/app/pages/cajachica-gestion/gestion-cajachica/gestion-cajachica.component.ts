@@ -36,7 +36,7 @@ export class GestionCajachicaComponent implements OnInit {
   // dtOptionsModal: any;
   dtOptionsModal: DataTables.Settings = {};
 
-  btnVerData: boolean;
+  btnVerData: boolean = true;
 
 
 

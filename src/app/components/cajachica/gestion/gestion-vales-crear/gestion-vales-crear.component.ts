@@ -5,7 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import Swal from 'sweetalert2';
 import { CajachicaService } from 'src/app/services/cajachica.service';
-import { createMask } from '@ngneat/input-mask'
+import { createMask } from '@ngneat/input-mask';
 import { GestionCajachicaComponent } from 'src/app/pages/cajachica-gestion/gestion-cajachica/gestion-cajachica.component';
 
 @Component({
@@ -138,6 +138,14 @@ export class GestionValesCrearComponent implements OnInit {
     return 'info'; // Valor por defecto si no se cumple ninguna condición
   }
 
+  onInputChange(event: any) {
+    event.target.value = event.target.value.toUpperCase();
+  }
+
+
+  onSelectionChangeArea(event: any) {
+    this.ard_id = event.ard_id
+  }
 
   cerrarModal(modalKey: string) {
     console.log("cerrarModal called with modalKey:", modalKey);
@@ -291,6 +299,7 @@ export class GestionValesCrearComponent implements OnInit {
     this.cajachicaService.listarArea(post).subscribe({
       next: (data: any) => {
         // this.spinner.hide()
+        data.unshift({ ard_id: 0, ard_descri: 'SELECCIONAR' })
         this.dataArea = data
       }
     })

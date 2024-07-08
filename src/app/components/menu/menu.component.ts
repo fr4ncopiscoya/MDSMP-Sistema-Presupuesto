@@ -86,20 +86,14 @@ export class MenuComponent implements OnInit {
   }
 
   listarMenu() {
-    console.log(this.dataUsuario);
-
     let post = {
       p_usu_id: this.dataUsuario.numid,
       p_apl_id: 9
     };
-    console.log(post);
-
     this.spinner.show();
     this.cajachica.listarMenu(post).subscribe({
       next: (data: any) => {
         this.spinner.hide();
-        console.log(data);
-
         this.datosMenu = data;
 
       },
@@ -123,9 +117,6 @@ export class MenuComponent implements OnInit {
   }
 
   getLinkMenu(data: any) {
-    console.log(data);
-
-
     this.valMenu = data.obj_id;
     this.enlace = data.obj_enlace;
     console.log(this.valMenu);

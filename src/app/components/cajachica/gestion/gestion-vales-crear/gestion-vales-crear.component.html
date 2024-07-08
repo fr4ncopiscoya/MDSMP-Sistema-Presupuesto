@@ -48,13 +48,18 @@
         <div class="col-md-12">
             <div class="mb-3">
                 <label for="" class="form-label">Area</label>
-                <select [(ngModel)]="ard_id" [ngClass]="{'disabled-color': ccv_id > 0}" [disabled]="ccv_id > 0"
+                <!-- <select [(ngModel)]="ard_id" [ngClass]="{'disabled-color': ccv_id > 0}" [disabled]="ccv_id > 0"
                     class="form-select form-select-sm">
                     <option [value]="0">Seleccionar</option>
                     <option *ngFor="let data of dataArea" [value]="data.ard_id">
                         {{data.ard_descri}}
                     </option>
-                </select>
+                </select> -->
+                <ng-select style="border: 1px solid #b9b9b9; border-radius: 5px;" [(ngModel)]="ard_id"
+                    [ngClass]="{'disabled-color': ccv_id > 0}" [disabled]="ccv_id > 0" (input)="onInputChange($event)"
+                    [items]="dataArea" bindValue="ard_id" bindLabel="ard_descri" placeholder="Seleccionar"
+                    (change)="onSelectionChangeArea($event)">
+                </ng-select>
             </div>
         </div>
 

@@ -4,78 +4,76 @@
         <!-- Row1 -->
         <div class="col-md-7 mb-2">
             <label for="" class="form-label col-form-label col-form-label-sm">Tipo Doc.</label>
-            <select id="mrf_id" class="form-select form-select-sm" (change)="onSelectionChangeTipDocIde($event)">
-                <option [value]="0">Seleccionar</option>
-                <option *ngFor="let data of dataTipoDocIde" [value]="data.tdi_id">
-                    {{data.tdi_descri}}
-                </option>
-            </select>
-            <!-- <div class="mb-3 col-sm-2">
-                <label for="" class="form-label col-form-label col-form-label-sm">Filtro Fechas</label>
-                <select id="mrf_id" class="form-select form-select-sm" [(ngModel)]="mrf_id" (change)="busquedaTipoFecha()">
-                  <option [value]="0">Seleccionar</option>
-                  <option *ngFor="let data of datosFechas" [value]="data.mrf_id">
-                    {{data.mrf_descri}}
-                  </option>
-                </select>
-              </div> -->
+            <ng-select style="border: 1px solid #b9b9b9; border-radius: 5px;" [(ngModel)]="tdi_id" class=""
+                [ngClass]="{'disabled-color': btnVerData === false}" [disabled]="btnVerData === false"
+                (input)="onInputChange($event)" [items]="dataTipoDocIde" bindValue="tdi_id" bindLabel="tdi_descri"
+                placeholder="Seleccionar" (change)="onSelectionChangeTipDocIde($event)">
+            </ng-select>
         </div>
         <div class="col-md-5 mb-2">
-            <!-- <div class="mb-3"> -->
             <label for="" class="form-label col-form-label col-form-label-sm">Número Doc. </label>
-            <!-- <div class="" style="display: flex;"> -->
             <div class="">
-                <input type="text" class="form-control form-control-sm" id="montoinfra" ngClass="disabled-color" />
+                <input [(ngModel)]="per_numdoi" (blur)="consultarPide()" (keyup.enter)="consultarPide()"
+                    [ngClass]="{'disabled-color': tdi_id === 0}" [disabled]="tdi_id === 0" type="text"
+                    class="form-control form-control-sm" id="montoinfra" />
             </div>
-            <!-- <div class="" style="width: 80%; margin-left: 5px;">
-                    <input type="text" class="form-control form-control-sm" id="montoinfra" ngClass="disabled-color" />
-                </div> -->
-            <!-- </div> -->
         </div>
 
         <!-- Row2 -->
-        <div class="col-md-3 mb-2" *ngIf="tdi_id !== '2'">
+        <div class="col-md-3 mb-2" *ngIf="tdi_id !== 2">
             <label for="" class=" form-label col-form-label col-form-label-sm">Apellido Paterno</label>
-            <input id="" type="text" class="form-control form-control-sm disabled-color">
+            <input id="" [(ngModel)]="pen_apepat" type="text" oninput="this.value = this.value.toUpperCase()"
+                [ngClass]="{'disabled-color': this.error === 0 }" [disabled]="this.error === 0"
+                class="form-control form-control-sm">
         </div>
-        <div class="col-md-3 mb-2" *ngIf="tdi_id !== '2'">
+        <div class="col-md-3 mb-2" *ngIf="tdi_id !== 2">
             <label for="" class=" form-label col-form-label col-form-label-sm">Apellido Materno</label>
-            <input id="" type="text" class="form-control form-control-sm disabled-color">
+            <input id="" [(ngModel)]="pen_apemat" type="text" oninput="this.value = this.value.toUpperCase()"
+                [ngClass]="{'disabled-color': this.error === 0 }" [disabled]="this.error === 0"
+                class="form-control form-control-sm">
         </div>
-        <div class="col-md-6 mb-2" *ngIf="tdi_id !== '2'">
+        <div class="col-md-6 mb-2" *ngIf="tdi_id !== 2">
             <label for="" class=" form-label col-form-label col-form-label-sm">Nombre</label>
-            <input id="" type="text" class="form-control form-control-sm disabled-color">
+            <input id="" [(ngModel)]="pen_nombre" type="text" oninput="this.value = this.value.toUpperCase()"
+                [ngClass]="{'disabled-color': this.error === 0 }" [disabled]="this.error === 0"
+                class="form-control form-control-sm">
         </div>
-        <div class="col-md-12 mb-2" *ngIf="tdi_id === '2'">
+        <div class="col-md-12 mb-2" *ngIf="tdi_id === 2">
             <label for="" class="form-label col-form-label col-form-label-sm">Nombre o Razón Social</label>
-            <input id="" type="text" class="form-control form-control-sm disabled-color">
+            <input id="" [(ngModel)]="pej_razsoc" [ngClass]="{'disabled-color': this.error === 0 }"
+                [disabled]="this.error === 0" type="text" oninput="this.value = this.value.toUpperCase()"
+                class="form-control form-control-sm">
         </div>
 
         <!-- Row 3 -->
         <div class="col-md-4 mb-2">
             <label for="" class="form-label col-form-label col-form-label-sm">Tipo Doc.</label>
-            <select [(ngModel)]="ccd_id" class="form-select form-select-sm">
-                <!-- <option [value]="0">Seleccionar</option> -->
-                <option *ngFor="let data of dataTipoDoc" [value]="data.ccd_id">
-                    {{data.ccd_descri}}
-                </option>
-            </select>
+            <ng-select style="border: 1px solid #b9b9b9; border-radius: 5px;" [(ngModel)]="ccd_id" class=""
+                [ngClass]="{'disabled-color': btnVerData === false}" [disabled]="btnVerData === false"
+                (input)="onInputChange($event)" [items]="dataTipoDoc" bindValue="ccd_id" bindLabel="ccd_descri"
+                placeholder="Seleccionar" (change)="onSelectionChangeTipDoc($event)">
+            </ng-select>
         </div>
+
         <div class="col-md-3 mb-2">
             <div class="">
                 <label for="" class="form-label col-form-label col-form-label-sm">Fecha Doc.</label>
-                <input type="date" class="form-control form-control-sm">
+                <input type="date" [(ngModel)]="ccm_fecdoc" [ngClass]="{'disabled-color': btnVerData === false}"
+                    [disabled]="btnVerData === false" class="form-control form-control-sm">
             </div>
         </div>
         <div class="col-md-5 mb-2">
             <div class="">
                 <label for="" class="form-label col-form-label col-form-label-sm">Número Doc.</label>
                 <div class="" style="display: flex;">
-                    <div class="" style="width: 40%;">
-                        <input id="" type="number" class="form-control form-control-sm disabled-color">
+                    <div class="" style="width: 40%; margin-right: 5px;">
+                        <input id="" [(ngModel)]="ccm_numser" [ngClass]="{'disabled-color': btnVerData === false}"
+                            [disabled]="btnVerData === false" type="number" class="form-control form-control-sm">
                     </div>
+                    <div class="" style="padding-top: 5px;">-</div>
                     <div class="" style="margin-left: 5px;">
-                        <input id="" type="number" class="form-control form-control-sm disabled-color">
+                        <input id="" [(ngModel)]="ccm_numdoc" [ngClass]="{'disabled-color': btnVerData === false}"
+                            [disabled]="btnVerData === false" type="number" class="form-control form-control-sm">
                     </div>
                 </div>
             </div>
@@ -83,69 +81,69 @@
 
         <div class="col-md-12 mb-2">
             <label for="" class="form-label col-form-label col-form-label-sm">Descripción</label>
-            <input id="" type="text" class="form-control form-control-sm disabled-color">
+            <input id="" [(ngModel)]="ccm_descri" [ngClass]="{'disabled-color': btnVerData === false}"
+                [disabled]="btnVerData === false" oninput="this.value = this.value.toUpperCase()" type="text"
+                class="form-control form-control-sm">
         </div>
 
         <!-- Row4 -->
         <div class="col-md-12 mb-2">
             <label for="" class="form-label col-form-label col-form-label-sm">Tipo Rubro</label>
-            <select [(ngModel)]="ccr_id" class="form-select form-select-sm">
-                <option [value]="0">Seleccionar</option>
-                <option *ngFor="let data of dataRubro" [value]="data.ccr_id">
-                    {{data.ccr_descri}}
-                </option>
-            </select>
+            <ng-select style="border: 1px solid #b9b9b9; border-radius: 5px;" [(ngModel)]="ccr_id" class=""
+                [ngClass]="{'disabled-color': btnVerData === false}" [disabled]="btnVerData === false"
+                (input)="onInputChange($event)" [items]="dataRubro" bindValue="ccr_id" bindLabel="ccr_descri"
+                placeholder="Seleccionar" (change)="onSelectionChangeRubro($event)">
+            </ng-select>
         </div>
 
         <!-- Row5 -->
         <div class="col-md-12 mb-2">
             <label for="" class="form-label col-form-label col-form-label-sm">Partida</label>
             <div class="" style="display: flex;">
-                <div class="">
-                    <input type="text" class="form-control form-control-sm" id="montoinfra" ngClass="disabled-color" />
+                <div class="" style="margin-right: 5px;">
+                    <input type="text" disabled="" [(ngModel)]="ccr_parpre"
+                        class="form-control form-control-sm disabled-color" id="montoinfra" />
                 </div>
+                <div class="" style="padding-top: 5px;">-</div>
                 <div class="" style="width: 80%; margin-left: 5px;">
-                    <input type="text" class="form-control form-control-sm" id="montoinfra" ngClass="disabled-color" />
+                    <input type="text" disabled="" [(ngModel)]="ccr_descri"
+                        class="form-control form-control-sm disabled-color" id="montoinfra" />
                 </div>
             </div>
         </div>
 
         <!-- Row6 -->
         <div class="col-md-12 mb-2">
-            <label for="" class="form-label col-form-label col-form-label-sm">Area</label>
-            <select id="mrf_id" class="form-select form-select-sm">
-                <option [value]="0">Seleccionar</option>
-                <option *ngFor="let data of dataArea" [value]="ard_id">
-                    {{data.ard_descri}}
-                </option>
-            </select>
+            <label for="" class="form-label col-form-label col-form-label-sm">Observacion</label>
+            <input id="" [(ngModel)]="ccm_observ" [ngClass]="{'disabled-color': btnVerData === false}"
+                [disabled]="btnVerData === false" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control form-control-sm">
         </div>
 
-
         <!-- Row7 -->
-        <div class="col-md-12">
-            <div class="" style="display: flex;">
-                <div class="col-md-3">
-                    <label for="" class="form-label col-sm-6 col-form-label-sm">Monto </label>
-                    <input type="text" class="form-control form-control-sm" id="montoinfra" ngClass="disabled-color" />
-                </div>
-                <div class="col-md-3">
+        <div class="col-md-12" style="display: flex;">
+            <div class="col-mb-3">
+                <label for="" class="form-label">Monto </label>
+                <input [ngModel]="ccm_monmov " [ngClass]="{'disabled-color': btnVerData === false}"
+                    [disabled]="btnVerData === false" (keypress)="validarNumero($event)"
+                    (ngModelChange)="ccm_monmov = $event" type="text" class="form-control form-control-sm "
+                    id="montoinfra" [inputMask]="currencyInputMask" placeholder="S/. 0.00" />
+            </div>
+            <div class="col-md-3" style="margin-left: 10px;">
+                <label for="" class="form-label col-form-label col-form-label-sm">Fecha
+                    Mov.</label>
+                <input type="date" [(ngModel)]="ccm_fecmov" [ngClass]="{'disabled-color': btnVerData === false}"
+                    [disabled]="btnVerData === false" class="form-control form-control-sm">
+            </div>
+            <div class="col-md-3">
 
-                </div>
-                <div class="col-md-3">
-
-                </div>
-                <div class="col-md-3" style="margin-top: 25px;">
-                    <!-- <div class="text-end">
-                        <button id="btn-anular" type="button" (click)="anularInformeFinal()"
-                            class="btn btn-warning show-hide">Editar</button>
-                    </div> -->
-                    <div class="text-end">
-                        <button id="btn-guardar" type="button" class="btn btn-primary show-hide">Guardar</button>
-                    </div>
+            </div>
+            <div class="col-md-3" *ngIf="btnVerData !== false" style="margin-top: 25px;">
+                <div class="text-end">
+                    <button id="btn-guardar" (click)="this.registrarGasto()"
+                        [ngClass]="{'btn': true, 'btn-info': ccm_id > 0, 'btn-primary': ccm_id === 0}" type="button"
+                        class="btn btn-primary show-hide">{{txt_button}}</button>
                 </div>
             </div>
-
         </div>
 
 

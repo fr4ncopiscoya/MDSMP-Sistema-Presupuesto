@@ -1,0 +1,16 @@
+.disabled-color {
+    background-color: #e1e1e1;
+}
+
+ng-select.form-control.input-sm.ng-select-searchable.ng-select-clearable.ng-select.ng-select-single.ng-pristine.ng-valid.ng-select-bottom.ng-touched {
+    border: 1px solid #b9b9b9 !important;
+}
+
+.ng-select-container.ng-has-value {
+    border: 1px solid #b9b9b9 !important;
+}
+
+::ng-deep .ng-select-container {
+    height: 27px !important;
+    font-size: 0.8em !important;
+}

@@ -12,10 +12,12 @@ export class CajachicaService {
   dataCaja: any
   dataCajachica: any
   dataCajaVales: any
+  dataCajaGastos: any
   dataCajaAny: any
 
   cca_anyper: number
   cca_id: number
+  ccv_id: number
 
   constructor(private httpClientUtils: HttpClientUtils, private http: HttpClient) { }
 
@@ -51,7 +53,17 @@ export class CajachicaService {
 
   consultarPide(data: any) {
     return this.httpClientUtils
-      .postQueryPide('persona/buscar', data)
+      .postQueryPide('persona/buscar-pide', data)
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  consultarPideJuridica(data: any) {
+    return this.httpClientUtils
+      .postQueryPide('juridica/buscar', data)
       .pipe(
         map((data) => {
           return data;
@@ -82,6 +94,16 @@ export class CajachicaService {
   registrarCajaVales(data: any) {
     return this.httpClientUtils
       .postQuery('cajachica/gestion/vales-crear', data)
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  registrarCajaGastos(data: any) {
+    return this.httpClientUtils
+      .postQuery('cajachica/gestion/gastos-crear', data)
       .pipe(
         map((data) => {
           return data;
@@ -132,6 +154,16 @@ export class CajachicaService {
   cerrarVale(data: any) {
     return this.httpClientUtils
       .postQuery('cajachica/gestion/cerrar-vale', data)
+      .pipe(
+        map((data) => {
+          return data;
+        })
+      );
+  }
+
+  anularGasto(data: any) {
+    return this.httpClientUtils
+      .postQuery('cajachica/gestion/gastos-anular', data)
       .pipe(
         map((data) => {
           return data;

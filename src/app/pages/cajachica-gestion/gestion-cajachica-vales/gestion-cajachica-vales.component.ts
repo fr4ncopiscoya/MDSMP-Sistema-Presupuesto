@@ -309,8 +309,8 @@ export class GestionCajachicaValesComponent implements OnInit {
 
   goAperturaGastos(data: any) {
     try {
-      const dataGastos = JSON.stringify(data)
-      localStorage.setItem('dataGastos', dataGastos)
+      const dataVales = JSON.stringify(data)
+      localStorage.setItem('dataVales', dataVales)
       this.router.navigateByUrl('/cajachica-gestion-gastos')
     } catch (error) {
       console.log("error stringify");

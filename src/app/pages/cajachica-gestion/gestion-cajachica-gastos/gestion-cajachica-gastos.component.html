@@ -16,6 +16,14 @@
                 <div class="col-12">
                     <div class="card card-h-100">
                         <div class="card-body">
+
+                            <div class="form-check form-switch form-switch-lg" style="margin: 15px 3px;">
+                                <input type="checkbox" class="form-check-input" (change)="checkboxChange(this.chk_btn)"
+                                    id="customSwitchsizelg" [(ngModel)]="chk_btn">
+                                <label class="form-check-label" for="customSwitchsizelg"
+                                    style="font-weight: bold;">{{txt_chekbox}}</label>
+                            </div>
+
                             <div>
                                 <table id="tablaAplicacion" datatable [dtOptions]="dtOptionsModal"
                                     [dtTrigger]="dtTrigger" class=" align-middle mb-0 " style="width: 100%;">
@@ -27,6 +35,7 @@
                                             <th class="text-center">Nombre o Razón Social</th>
                                             <th class="text-center">Rubro</th>
                                             <th class="text-center">Importe</th>
+                                            <th class="text-center">Estado</th>
                                             <th class="text-center">Acciones</th>
                                         </tr>
                                     </thead>
@@ -37,21 +46,30 @@
                                             <td>{{ data.ccm_numcmp }}</td>
                                             <td>{{ data.ccm_fecdoc | date: 'dd/MM/yyyy' }}</td>
                                             <td>{{ data.per_nombre }}</td>
-                                            <td>{{ data.ccr_descri }}</td>
+                                            <td>{{ data.ccm_descri }}</td>
                                             <td>{{ data.ccm_monmov}}</td>
+                                            <td style="font-weight: bold" [style.color]="data.ccm_colors">{{
+                                                data.ccm_estado}}</td>
                                             <td>
-                                                <button type="button" style="padding: 2px 5px; margin: 2px 0px; "
-                                                    title="Editar" class="btn btn-primary btn-sm">
+                                                <button type="button"
+                                                    (click)="modalCajaGastosValue(modalCrearGastosVale,data,false)"
+                                                    style="padding: 2px 5px; margin: 2px 5px; " title="Ver"
+                                                    class="btn btn-primary btn-sm">
+                                                    <i class="ri-eye-fill"></i>
+                                                </button>
+                                                <button type="button"
+                                                    (click)="modalCajaGastosValue(modalCrearGastosVale,data,true)"
+                                                    style="padding: 2px 5px; margin: 2px 0px; " title="Editar"
+                                                    class="btn btn-info btn-sm">
                                                     <i class="ri-pencil-fill"></i>
                                                 </button>
-                                                <!-- <button type="button" style="padding: 2px 5px; margin: 2px 5px; "
-                                                    title="Costas" class="btn btn-success btn-sm">
-                                                    C
+                                                <button type="button"
+                                                    (click)="sweetAlertValidar(data,'Esta seguro de anular este gasto?', 'Si, anular gasto')"
+                                                    style="padding: 2px 5px; margin: 2px 5px; "
+                                                    [ngClass]="{'btn': true, 'btn-sm':true,'btn-danger': data.ccm_activo === 1, 'btn-success': data.ccm_activo === 0}">
+                                                    <i
+                                                        [ngClass]="{'ri-close-fill': data.ccm_activo === 1, ' ri-check-fill': data.ccm_activo === 0}"></i>
                                                 </button>
-                                                <button type="button" style="padding: 2px 5px; margin: 2px 0px; "
-                                                    title="Gastos" class="btn btn-warning btn-sm">
-                                                    G
-                                                </button> -->
                                             </td>
                                         </tr>
                                     </tbody>
@@ -77,7 +95,7 @@
                     </div>
                     <div class="col-sm-2" style="display: flex; align-items: center"></div>
                     <div class="col-sm-2" style="padding: 10px; display: flex; justify-content: right;">
-                        <button type="button" (click)="modalCajaGastosValue(modalCrearGastosVale,data)"
+                        <button type="button" (click)="modalCajaGastosValue(modalCrearGastosVale,null,true)"
                             class="btn btn-primary btn-label btn btn-sm">
                             <i class="ri-save-3-line label-icon align-middle fs-16"></i>
                             Nuevo
@@ -104,12 +122,13 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header" style="display: flex; justify-content: space-between;">
-                        <h4 class="card-title mb-0">Ingresar Movimiento</h4>
+                        <h4 class="card-title mb-0">{{text_vales}}</h4>
                         <a class="" (click)="cerrarModal('modalCrearGastosVale')" style="cursor: pointer;"> <i
                                 style="font-size: 1.50rem; " class=" ri-close-fill"></i></a>
                     </div>
                     <div class="">
-                        <app-gestion-gastos-crear (gastoRegistrado)="actualizarGastos()" ></app-gestion-gastos-crear>
+                        <app-gestion-gastos-crear [btnVerData]="btnVerData"
+                            (gastoRegistrado)="actualizarGastos()"></app-gestion-gastos-crear>
                     </div>
                 </div>
             </div>

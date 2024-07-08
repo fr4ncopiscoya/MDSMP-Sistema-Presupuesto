@@ -63,11 +63,18 @@ export class GestionCajachicaGastosComponent implements OnInit {
   datosCajaVale: any;
   datosCajaChicaGastos: any
 
-  //COSTAS
-  datosCostas: any;
-  datosGastos: any;
+  //Pasar Data
+  btnVerData: boolean
 
-  error: string = ''
+  text_vales: string;
+  txt_chekbox: string;
+  mensa: string;
+  error: number;
+
+  ccm_id: number;
+  ccm_activo: number;
+  chk_activo: number;
+  chk_btn: boolean = true;
 
 
   constructor(
@@ -85,7 +92,7 @@ export class GestionCajachicaGastosComponent implements OnInit {
   ) {
     this.appComponent.login = false;
     this.dataUsuario = localStorage.getItem('dataUsuario');
-    const dataVales = localStorage.getItem('dataGastos')
+    const dataVales = localStorage.getItem('dataVales')
     if (dataVales !== null) {
       this.datosCajaVale = JSON.parse(dataVales)
     }
@@ -104,23 +111,17 @@ export class GestionCajachicaGastosComponent implements OnInit {
         url: "//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json"
       },
     }
-
-    this.listarCajaChicaGastos();
+    this.listarCajaChicaGastos(true);
     const fechaActual = new Date().toISOString().split('T')[0];
 
   }
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
-    this.dtTriggerModal.unsubscribe();
   }
 
   ngAfterViewInit() {
     this.dtTrigger.next();
-    this.dtTriggerModal.next();
-
-
-    /* (document.querySelector('.dataTables_scrollBody') as HTMLElement).style.top = '150px'; */
   }
 
   //DIGITAR UNICAMENTE NUMEROS
@@ -139,6 +140,10 @@ export class GestionCajachicaGastosComponent implements OnInit {
     event.target.value = event.target.value.toUpperCase();
   }
 
+  checkboxChange(value: any) {
+    console.log("estado: ", value);
+    this.listarCajaChicaGastos(value);
+  }
 
 
 
@@ -150,83 +155,109 @@ export class GestionCajachicaGastosComponent implements OnInit {
   }
 
 
-  modalCajaGastosValue(template: TemplateRef<any>, data: any) {
-    // this.idcorrl = data.id_corrl;
-    // console.log(this.idcorrl);
+  modalCajaGastosValue(template: TemplateRef<any>, data: any, ver: boolean) {
+    let value = 0;
+
+    // Si hay data y ccv_id está definido, usar ese valor
+    if (data !== undefined) {
+      value = data;
+    }
+
+    this.textValue(value);
+    this.btnVerData = ver
+    if (this.btnVerData === false) {
+      this.text_vales = 'Ver'
+    }
 
     this.modalRefs['modalCrearGastosVale'] = this.modalService.show(template, { id: 7, class: 'modal-lg', backdrop: 'static', keyboard: false });
     // this.sigtaService.idcorrl = this.idcorrl;
+  }
+
+  // Método para establecer el texto dependiendo del valor de ccv_id
+  textValue(data: any) {
+    console.log("dataTxt:", data);
+    if (data !== null) {
+      console.log("llegas");
+      this.cajachicaService.dataCajaGastos = data
+      this.text_vales = 'Editar';
+    } else {
+      this.cajachicaService.dataCajaGastos = null
+      this.text_vales = 'Registrar';
+    }
   }
 
 
 
 
   // ================== MENSAJES SWEETALERT =====================
-  private getIconByErrorCode(errorCode: string): 'error' | 'warning' | 'info' | 'success' {
-    switch (errorCode) {
-      case '-100':
-        return 'error';
-      case '-101':
-        return 'error';
-      case '-102':
-        return 'error';
-      case '-103':
-        return 'error';
-      case '-104':
-        return 'error';
-      case '-105':
-        return 'error';
-      case '0':
-        return 'success';
-      default:
-        return 'error';
+
+  private getIconByErrorCode(errorCode: number): 'error' | 'warning' | 'info' | 'success' {
+    if (errorCode < 0 || errorCode === 999) {
+      return 'error';
+    }
+    if (errorCode === 0) {
+      return 'success';
+    }
+    return 'info';
+  }
+
+  private errorSweetAlert(icon: 'error' | 'warning' | 'info' | 'success' = 'error', callback?: () => void) {
+    Swal.fire({
+      icon: icon,
+      text: this.mensa || 'Hubo un error al procesar la solicitud',
+    }).then((result) => {
+      if (result.isConfirmed && callback) {
+        callback();
+      }
+    });
+  }
+
+  public sweetAlertValidar(data: any, title_val: string, confirmButtonText_val: string) {
+    console.log("data-act: ", data);
+    this.ccm_id = data.ccm_id;
+    const activo = data.ccm_activo
+    if (activo !== 1) {
+      title_val = 'Esta seguro de activar este gasto?'
+      confirmButtonText_val = 'Si, activar gasto'
+    } else {
+    }
+
+    Swal.fire({
+      title: title_val,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: confirmButtonText_val
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.anularGasto(activo);
+      }
+    });
+  }
+
+  goBackTo() {
+    switch (this.mensa) {
+      case "Gasto Caja Chica Anulado, Correctamente":
+      case "Gasto Caja Chica Activado, Correctamente":
+      case 'Error al Activar Gasto - Caja Chica':
+        this.listarCajaChicaGastos(this.chk_btn)
     }
   }
 
-  private errorSweetAlert(icon: 'error' | 'warning' | 'info' | 'success' = 'error') {
-    Swal.fire({
-      icon: icon,
-      text: this.error || 'Hubo un error al procesar la solicitud',
-    });
-  }
 
-  private errorSweetAlertCode() {
-    Swal.fire({
-      icon: 'error',
-      text: 'Por favor ingrese un código válido',
-    });
-  }
-  private errorSweetAlertData() {
-    Swal.fire({
-      icon: 'info',
-      text: 'No se encontraron datos en su busqueda',
-    });
-  }
-  private errorSweetAlertFecha() {
-    Swal.fire({
-      icon: 'info',
-      text: 'Fecha Inicio no puede ser mayor a Fecha Fin',
-    });
-  }
-
-  private errorSweetAlertFechaIncompleta() {
-    Swal.fire({
-      icon: 'info',
-      text: 'Fecha Incompleta',
-    });
-  }
-
-  private errorSweetAlertFiltros() {
-    Swal.fire({
-      icon: 'info',
-      text: 'Por favor ingrese un filtro de busqueda',
-    });
-  }
-
-  listarCajaChicaGastos() {
+  listarCajaChicaGastos(value: boolean) {
+    console.log("value: ", value);
+    if (value) {
+      this.txt_chekbox = "ACTIVO"
+    }
+    else {
+      this.txt_chekbox = "INACTIVO"
+    }
     let post = {
       p_ccm_id: 0,
       p_ccv_id: this.datosCajaVale.ccv_id,
+      p_ccm_activo: value
     };
 
     console.log(post);
@@ -237,6 +268,10 @@ export class GestionCajachicaGastosComponent implements OnInit {
         console.log(data);
 
         this.datosCajaChicaGastos = data;
+        this.cajachicaService.dataCajaGastos = this.datosCajaChicaGastos
+
+        // this.cajachicaService.ccv_id = data[0].ccv_id
+        // console.log(this.cajachicaService.ccv_id);
 
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
@@ -244,15 +279,45 @@ export class GestionCajachicaGastosComponent implements OnInit {
         });
       },
       error: (error: any) => {
-        this.errorSweetAlert();
+        // this.errorSweetAlert();
         this.spinner.hide();
         console.log(error);
       },
     });
   }
 
+  anularGasto(data: any) {
+    console.log("data-anular: ", data);
+    if (data !== 1) {
+      this.ccm_activo = 1
+      console.log("inactivo", this.ccm_activo);
+
+    } else {
+      this.ccm_activo = 0
+      console.log("activo", this.ccm_activo);
+    }
+
+    let post = {
+      p_ccm_id: this.ccm_id,
+      p_ccm_activo: this.ccm_activo,
+      p_ccm_usumov: this.dataUsuario.numid
+    }
+    console.log("post:", post);
+
+
+    this.cajachicaService.anularGasto(post).subscribe({
+      next: (data: any) => {
+        console.log("data-result-gasto: ", data);
+        this.mensa = data[0].mensa
+        const errorCode = data[0].error
+        const icon = this.getIconByErrorCode(errorCode)
+        this.errorSweetAlert(icon, this.goBackTo.bind(this))
+      }
+    })
+  }
+
   actualizarGastos() {
-    this.listarCajaChicaGastos();
+    this.listarCajaChicaGastos(this.chk_btn);
   }
 
 
