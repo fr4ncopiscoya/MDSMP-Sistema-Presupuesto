@@ -240,8 +240,6 @@ export class GestionCajachicaValesComponent implements OnInit {
     });
   }
 
-
-
   // ===================== FUNCIONES =====================
 
   getData(data: any) {

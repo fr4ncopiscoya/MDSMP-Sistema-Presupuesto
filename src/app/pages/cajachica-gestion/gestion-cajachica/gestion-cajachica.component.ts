@@ -150,6 +150,36 @@ export class GestionCajachicaComponent implements OnInit {
     });
   }
 
+  exportarCajaXls() {
+    let post = {
+
+    }
+    this.cajachicaService.exportarCajaXlS(post).subscribe(
+      (response: any) => { // Cambiado a 'any' en lugar de 'Blob'
+        // Crea un objeto URL para el Blob
+        const blobUrl = window.URL.createObjectURL(response);
+
+        // Crea un enlace temporal
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = 'CuentaCorriente.xls'; // Nombre del archivo que se descargará
+
+        // Agrega el enlace al DOM y haz clic en él
+        document.body.appendChild(link);
+        link.click();
+
+        // Elimina el enlace del DOM después de la descarga
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(blobUrl);
+      },
+      (error: any) => {
+        // Maneja el error aquí
+        console.error('Error al exportar PDF:', error);
+        // Puedes mostrar un mensaje de error al usuario si lo deseas
+      }
+    );
+  }
+
   modalListarPeriodo(template: TemplateRef<any>, data: any) {
     this.modalRefs['listar-periodo'] = this.modalService.show(template, { id: 2, class: 'modal-lg', backdrop: 'static', keyboard: false });
   }

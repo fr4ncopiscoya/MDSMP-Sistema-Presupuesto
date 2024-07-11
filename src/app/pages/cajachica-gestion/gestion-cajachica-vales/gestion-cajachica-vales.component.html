@@ -20,10 +20,10 @@
                                     <thead class="table-light">
                                         <tr style="font-size: 12px;">
                                             <th class="text-center">Nº Vale</th>
-                                            <th class="text-center">Fecha Apertura</th>
+                                            <!-- <th class="text-center">Fecha Apertura</th> -->
                                             <th class="text-center">Fecha Inicio</th>
-                                            <th class="text-center">Fecha Cierre</th>
                                             <th class="text-center">Monto Vale</th>
+                                            <th class="text-center">Fecha Cierre</th>
                                             <th class="text-center">Monto Rendido</th>
                                             <th class="text-center">Acciones</th>
                                         </tr>
@@ -32,10 +32,10 @@
                                         <tr ngClass="" *ngFor="let data of datosCajaChicaVales; let i = index"
                                             class="text-center tr_hover">
                                             <td>{{ data.ccv_numero }}</td>
-                                            <td>{{ data.ccp_fecape | date: 'dd/MM/yyyy' }}</td>
+                                            <!-- <td>{{ data.ccp_fecape | date: 'dd/MM/yyyy' }}</td> -->
                                             <td>{{ data.ccv_feciva | date: 'dd/MM/yyyy' }}</td>
-                                            <td>{{ data.ccv_feccva | date: 'dd/MM/yyyy' }}</td>
                                             <td>{{ data.ccv_monval | number : "1.2-2"}}</td>
+                                            <td>{{ data.ccv_feccva | date: 'dd/MM/yyyy' }}</td>
                                             <td>{{ data.ccv_mongas | number : '1.2-2' }}</td>
                                             <td>
                                                 <div class="d-flex center" style="justify-content: center;">
@@ -111,7 +111,16 @@
                         (keypress)="validarNumero($event)" class="form-control form-control-sm" id="employeeUrl"
                         placeholder="" /> -->
                 </div>
-                <div class="col-sm-2" style="display: flex; align-items: center"></div>
+                <div class="col-sm-2" style="display: flex; align-items: center">
+
+                </div>
+                <!-- <div class="col-sm-2" style="padding: 10px; display: flex; justify-content: right;">
+                    <button type="button" (click)="exportToExcel()"
+                        class="btn btn-primary btn-label btn btn-sm">
+                        <i class="ri-save-3-line label-icon align-middle fs-16"></i>
+                        Excel
+                    </button>
+                </div> -->
                 <div class="col-sm-2" style="padding: 10px; display: flex; justify-content: right;">
                     <button type="button" (click)="modalCajaCrearVale(modalCrearVale,null,true)"
                         class="btn btn-primary btn-label btn btn-sm">

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { HttpClientUtils } from '../utils/http-client.utils';
@@ -229,6 +229,22 @@ export class CajachicaService {
           return data;
         })
       );
+  }
+
+  exportarCajaXlS(data: any) {
+    const url = 'http://webapp.mdsmp.gob.pe/cajachicabackend/public/v1/cajachica/gestion/caja-exportar';
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    // Opciones para la solicitud HTTP
+    const options = {
+      responseType: 'blob' as 'json', // Indica que esperamos un Blob como respuesta
+      headers: headers
+    };
+
+    return this.http.post(url, data, options);
   }
 
 }

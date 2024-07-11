@@ -91,11 +91,14 @@ export class GestionCajachicaGastosComponent implements OnInit {
     private cajachicaService: CajachicaService
   ) {
     this.appComponent.login = false;
-    this.dataUsuario = localStorage.getItem('dataUsuario');
+    const dataUsuario = localStorage.getItem('dataUsuario');
+    this.dataUsuario = JSON.parse(dataUsuario)
     const dataVales = localStorage.getItem('dataVales')
     if (dataVales !== null) {
       this.datosCajaVale = JSON.parse(dataVales)
     }
+    console.log("dataVales: ", this.datosCajaVale.ccv_cierre);
+
   }
 
   ngOnInit(): void {
@@ -287,7 +290,7 @@ export class GestionCajachicaGastosComponent implements OnInit {
   }
 
   anularGasto(data: any) {
-    console.log("data-anular: ", data);
+    console.log("data-numid: ", this.dataUsuario.numid);
     if (data !== 1) {
       this.ccm_activo = 1
       console.log("inactivo", this.ccm_activo);

@@ -172,10 +172,6 @@ export class GestionGastosCrearComponent implements OnInit {
     this.ccr_id = event.ccr_id
     this.ccr_parpre = event.ccr_parpre
     this.ccr_descri = event.cpp_descri
-    console.log(this.ccr_parpre);
-    console.log(this.cpp_descri);
-
-
   }
 
   onInputChange(event: any) {
@@ -186,7 +182,7 @@ export class GestionGastosCrearComponent implements OnInit {
 
   listarTipoDocumentoIdentidad() {
     let post = {
-      // p_tdi_id: this.tdi_id
+
     }
     this.spinner.show();
     this.cajachicaService.listarTipoDocumentoIdentidad(post).subscribe({
@@ -194,7 +190,6 @@ export class GestionGastosCrearComponent implements OnInit {
         this.spinner.hide()
         data.unshift({ tdi_id: 0, tdi_descri: 'NINGUNO' });
         this.dataTipoDocIde = data
-        console.log("data-tdi: ", this.dataTipoDocIde);
       }
     })
   }
@@ -253,7 +248,7 @@ export class GestionGastosCrearComponent implements OnInit {
   limparCamposEntrada() {
     this.pej_razsoc = ''
     this.pen_apemat = ''
-    this.pen_apepat = ''
+    this.pen_apepat = null
     this.pen_nombre = ''
     this.mensa = null
     this.error = null
@@ -274,7 +269,6 @@ export class GestionGastosCrearComponent implements OnInit {
         if (this.tdi_id === 1 && this.per_numdoi.length === 8 || this.tdi_id === 3 && this.per_numdoi.length === 9) {
           this.cajachicaService.consultarPide(post).subscribe({
             next: (data: any) => {
-              // console.log("data-persona-natural: ", data);              
               this.error = data.error
               this.mensa = data.mensa
               if (this.error === 0) {
@@ -348,34 +342,6 @@ export class GestionGastosCrearComponent implements OnInit {
     }
   }
 
-  // consultarPide() {
-  //   let post = {
-  //     p_tdi_id: this.tdi_id,
-  //     p_per_numdoi: this.p_per_numdoi,
-  //     app: 9,
-  //     usuario: this.dataUsuario[0].usu_id
-  //   }
-  //   if (this.p_per_numdoi.length === 8 || this.p_per_numdoi.length === 11 || this.p_per_numdoi.length === 12) {
-  //     if (this.tdi_id === '1' || this.tdi_id === '3') {
-  //       this.cajachicaService.consultarPide(post).subscribe({
-  //         next: (data: any) => {
-  //           console.log("data-persona-natural: ", data);
-  //           this.pen_apemat = data['persona'].pen_apemat
-  //           this.pen_apepat = data['persona'].pen_apepat
-  //           this.pen_nombre = data['persona'].pen_nombre
-  //         }
-  //       })
-  //     }
-  //     if (this.tdi_id === '2') {
-  //       this.cajachicaService.consultarPideJuridica(post).subscribe({
-  //         next: (data: any) => {
-  //           this.pej_razsoc = data['persona'].pej_razsoc
-  //         }
-  //       })
-  //     }
-  //   }
-  // }
-
   registrarGasto() {
 
     if (this.ccm_monmov !== undefined) {
@@ -402,11 +368,8 @@ export class GestionGastosCrearComponent implements OnInit {
       p_ccm_monmov: this.ccm_monmov,
       p_usu_id: this.dataUsuario[0].usu_id
     }
-    console.log("post gastos: ", post);
-
     this.cajachicaService.registrarCajaGastos(post).subscribe({
       next: (data: any) => {
-        console.log("result registrar gasto: ", data);
         const errorCode = data[0].error;
         this.mensa = data[0].mensa;
         const icon = this.getIconByErrorCode(errorCode);

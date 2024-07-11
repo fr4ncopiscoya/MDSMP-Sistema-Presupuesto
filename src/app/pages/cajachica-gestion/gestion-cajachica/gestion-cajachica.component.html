@@ -122,6 +122,21 @@
                                     </tbody>
                                 </table>
                                 <div class="">
+                                    <button type="button" style="margin-right: 10px;"
+                                        class="btn btn-success btn-label btn btn-sm" data-bs-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <i class="ri-file-excel-2-fill label-icon align-middle fs-16"></i>
+                                        Excel
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item " style="cursor: pointer;">X Factura
+                                        </button>
+                                        <button class="dropdown-item " style="cursor: pointer;">X Area
+                                        </button>
+                                        <button class="dropdown-item " (click)="exportarCajaXls()"
+                                            style="cursor: pointer;">X Vales
+                                        </button>
+                                    </div>
                                     <button type="button" (click)="modalRegistarCajachica(registarCajachica,null,true)"
                                         class="btn btn-primary btn-label btn btn-sm">
                                         <i class="ri-add-line label-icon align-middle fs-16"></i>
