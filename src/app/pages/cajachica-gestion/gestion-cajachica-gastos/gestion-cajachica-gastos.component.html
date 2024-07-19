@@ -25,6 +25,28 @@
                             </div>
 
                             <div>
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="card">                                        
+                                            <div class="card-header p-0 border-0 bg-soft-light">
+                                                <div class="row g-0 text-center">
+                                                    <div class="col-6 col-sm-6">
+                                                        <div class="p-2 border border-dashed border-start-0">
+                                                            <h5 class="mb-1 text-info"><span data-target="{{this.datosCajaVale.ccv_monval| number : '1.2-2'}}">S/. {{this.datosCajaVale.ccv_monval| number : '1.2-2'}}</span></h5>
+                                                            <p class="text-muted mb-0">Monto de Vale</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6 col-sm-6">
+                                                        <div class="p-2 border border-dashed border-start-0">
+                                                            <h5 class="mb-1 text-danger"><span data-target="{{this.datosCajaVale.ccv_mongas| number : '1.2-2'}}">S/. {{this.datosCajaVale.ccv_mongas| number : '1.2-2'}}</span></h5>
+                                                            <p class="text-muted mb-0">Monto de Gasto</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><!-- end card header -->
+                                        </div><!-- end card -->
+                                    </div><!-- end col -->
+                                </div>
                                 <table id="tablaAplicacion" datatable [dtOptions]="dtOptionsModal"
                                     [dtTrigger]="dtTrigger" class=" align-middle mb-0 " style="width: 100%;">
                                     <thead class="table-light">
@@ -77,24 +99,37 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <div class="">
+                                    <button type="button" (click)="modalCajaGastosValue(modalCrearGastosVale,null,true)"
+                                                                [ngClass]="{'disabled-color': datosCajaVale.ccv_cierre}"
+                                                                [disabled]="datosCajaVale.ccv_cierre" class="btn btn-primary btn-label btn btn-sm" style="margin-right: 8px;">
+                                                                <i class="ri-save-3-line label-icon align-middle fs-16"></i>
+                                                                Nuevo
+                                                            </button>
+                                    <button [routerLink]="['/cajachica-gestion-vales']" type="button"
+                                                                class="btn btn-danger btn-label btn btn-sm">
+                                                                <i class="ri-arrow-left-line label-icon align-middle fs-16"></i>
+                                                                Regresar
+                                                            </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="card container-fluid">
+            <!-- <div class="card container-fluid">
                 <div class="row">
                     <div class="mb-3 col-sm-4">
-                        <!-- <label for="" class="form-label col-form-label-sm">Inspector Municipal</label>
+                        <label for="" class="form-label col-form-label-sm">Inspector Municipal</label>
                         <input oninput="this.value = this.value.toUpperCase()" type="text"
-                            class="form-control form-control-sm" id="employeeUrl" placeholder="" /> -->
+                            class="form-control form-control-sm" id="employeeUrl" placeholder="" />
                     </div>
                     <div class="mb-3 col-sm-2">
-                        <!-- <label for="" class="form-label col-form-label-sm">Nº de Informes</label>
+                        <label for="" class="form-label col-form-label-sm">Nº de Informes</label>
                         <input type="text" oninput="this.value = this.value.toUpperCase()"
                             (keypress)="validarNumero($event)" class="form-control form-control-sm" id="employeeUrl"
-                            placeholder="" /> -->
+                            placeholder="" />
                     </div>
                     <div class="col-sm-2" style="display: flex; align-items: center"></div>
                     <div class="col-sm-2" style="padding: 10px; display: flex; justify-content: right;">
@@ -113,7 +148,7 @@
                         </button>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
         </div>
     </div>

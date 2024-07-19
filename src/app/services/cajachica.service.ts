@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { HttpClientUtils } from '../utils/http-client.utils';
 
 
@@ -231,20 +231,21 @@ export class CajachicaService {
       );
   }
 
-  exportarCajaXlS(data: any) {
-    const url = 'http://webapp.mdsmp.gob.pe/cajachicabackend/public/v1/cajachica/gestion/caja-exportar';
-
+  exportarCajaXlS(data: any): Observable<Blob> {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     });
 
-    // Opciones para la solicitud HTTP
-    const options = {
-      responseType: 'blob' as 'json', // Indica que esperamos un Blob como respuesta
-      headers: headers
-    };
+    // Ajusta la URL para incluir el parámetro p_ccp_id
+    const url = `http://localhost/test/public/v1/cajachica/gestion/caja-exportar?p_ccp_id=${data}`;
 
-    return this.http.post(url, data, options);
+    return this.http.get(url, {
+      headers: headers,
+      responseType: 'blob',
+    });
   }
+
+
 
 }

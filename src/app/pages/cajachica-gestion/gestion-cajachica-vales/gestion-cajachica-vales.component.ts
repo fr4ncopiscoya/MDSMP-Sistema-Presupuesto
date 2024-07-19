@@ -65,11 +65,15 @@ export class GestionCajachicaValesComponent implements OnInit {
   ccv_id: number = 0;
   ccv_monval: string = ''
   ccv_observ: string = ''
-
+  
   mensa: string = ''
-
+  
   btnVerData: boolean;
   text_vales: string = ''
+  
+  //Datos de tabla superior
+  monto_vale: number = 0;
+  monto_gasto: number = 0;
 
   constructor(
     private appComponent: AppComponent,
@@ -101,7 +105,7 @@ export class GestionCajachicaValesComponent implements OnInit {
       // paging: true,
       // pagingType: 'numbers',
       info: false,
-      scrollY: '500px',
+      scrollY: '350px',
       // columnDefs: [
       //   { width: '500px', targets: 2 },
       // ],
@@ -268,6 +272,7 @@ export class GestionCajachicaValesComponent implements OnInit {
         console.log(data);
 
         this.datosCajaChicaVales = data;
+        this.calcularDatosVale(data);
 
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
@@ -281,6 +286,21 @@ export class GestionCajachicaValesComponent implements OnInit {
       },
     });
 
+  }
+  
+  calcularDatosVale(datos: any) {
+    let totalMonval = 0;
+    let totalMongas = 0;
+  
+    for (let i = 0; i < datos.length; i++) {
+      totalMonval += parseFloat(datos[i].ccv_monval);
+      totalMongas += parseFloat(datos[i].ccv_mongas);
+    }
+    console.log(`Total de ccv_monval: ${totalMonval}`);
+    console.log(`Total de ccv_mongas: ${totalMongas}`);
+  
+    this.monto_vale=totalMonval;
+    this.monto_gasto=totalMongas;
   }
 
   cerrarVale(ccv_id: number) {

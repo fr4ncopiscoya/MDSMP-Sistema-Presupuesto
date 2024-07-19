@@ -52,8 +52,9 @@
                                             <th class="text-center">Caja</th>
                                             <th class="text-center">Apertura</th>
                                             <th class="text-center">Cierre</th>
-                                            <th class="text-center">Monto</th>
-                                            <th class="text-center">Vale</th>
+                                            <th class="text-center">Monto (S/.)</th>
+                                            <th class="text-center">Vale (S/.)</th>
+                                            <th class="text-center">Gasto (S/.)</th>
                                             <th class="text-center">Acciones</th>
                                         </tr>
                                     </thead>
@@ -65,6 +66,7 @@
                                             <td>{{ data.ccp_feccie | date: 'dd/MM/yyyy' }}</td>
                                             <td>{{ data.cca_monape | number: '1.2-2' }}</td>
                                             <td>{{ data.cca_monval | number: '1.2-2' }}</td>
+                                            <td>{{ data.cca_mongas | number: '1.2-2' }}</td>
                                             <!-- <td>
                                                 <button type="button"
                                                     (click)="modalRegistarCajachica(registarCajachica, data)"
@@ -112,36 +114,44 @@
                                                         </button>
                                                     </div>
                                                     <button type="button" title="Vales" (click)="goAperturaVales(data)"
-                                                        class="btn btn-sm btn-success btn-icon"
+                                                        class="btn btn-sm btn-warning btn-icon"
                                                         data-bs-toggle="dropdown" aria-haspopup="true"
                                                         aria-expanded="false" id="btnReso">V
                                                     </button>
+                                                    <button type="button" title="Reportes" style="margin-left: 2px;"
+                                                        class="btn btn-sm btn-success btn-icon"
+                                                        data-bs-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+                                                        <i class=" ri-file-excel-2-fill align-middle fs-20"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <button class="dropdown-item" (click)="exportarValesXls(data)"
+                                                            style="cursor: pointer;">X Vales
+                                                        </button>
+                                                        <button class="dropdown-item" (click)="exportarPartidaXls(data)"
+                                                            style="cursor: pointer;">X Partida
+                                                        </button>
+                                                        <button class="dropdown-item"
+                                                            (click)="exportarMovilidadXls(data)"
+                                                            style="cursor: pointer;">X Movilidad
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                                 <div class="">
-                                    <button type="button" style="margin-right: 10px;"
-                                        class="btn btn-success btn-label btn btn-sm" data-bs-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">
-                                        <i class="ri-file-excel-2-fill label-icon align-middle fs-16"></i>
-                                        Excel
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <button class="dropdown-item " style="cursor: pointer;">X Factura
-                                        </button>
-                                        <button class="dropdown-item " style="cursor: pointer;">X Area
-                                        </button>
-                                        <button class="dropdown-item " (click)="exportarCajaXls()"
-                                            style="cursor: pointer;">X Vales
-                                        </button>
-                                    </div>
                                     <button type="button" (click)="modalRegistarCajachica(registarCajachica,null,true)"
-                                        class="btn btn-primary btn-label btn btn-sm">
+                                        class="btn btn-primary btn-label btn btn-sm" style="margin-right: 8px;">
                                         <i class="ri-add-line label-icon align-middle fs-16"></i>
                                         Nuevo
                                     </button>
+                                    <!-- <button type="button" (click)="exportarCajaXls()"
+                                        class="btn btn-success btn-label btn btn-sm">
+                                        <i class="ri-add-line label-icon align-middle fs-16"></i>
+                                        Excel
+                                    </button> -->
                                 </div>
                             </div>
                         </div>

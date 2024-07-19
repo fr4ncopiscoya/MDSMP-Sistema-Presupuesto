@@ -69,7 +69,7 @@ export class GestionCajachicaComponent implements OnInit {
       // paging: true,
       // pagingType: 'numbers',
       info: false,
-      scrollY: '400px',
+      scrollY: '350px',
       columnDefs: [
         // { width: '500px', targets: 2 },
       ],
@@ -150,34 +150,28 @@ export class GestionCajachicaComponent implements OnInit {
     });
   }
 
-  exportarCajaXls() {
-    let post = {
+  exportarValesXls(data: any) {
+    let ccp_id = data.ccp_id
+    let cca_monape = data.cca_monape
+    let cca_monval = data.cca_monval
+    let cca_mongas = data.cca_mongas
 
-    }
-    this.cajachicaService.exportarCajaXlS(post).subscribe(
-      (response: any) => { // Cambiado a 'any' en lugar de 'Blob'
-        // Crea un objeto URL para el Blob
-        const blobUrl = window.URL.createObjectURL(response);
+    const url = `https://webapp.mdsmp.gob.pe/cajachicabackend/public/v1/cajachica/gestion/caja-exportar?p_ccp_id=${ccp_id}&cca_monape=${cca_monape}&cca_monval=${cca_monval}&cca_mongas=${cca_mongas}`;
+    window.open(url, '_blank');
+  }
 
-        // Crea un enlace temporal
-        const link = document.createElement('a');
-        link.href = blobUrl;
-        link.download = 'CuentaCorriente.xls'; // Nombre del archivo que se descargará
+  exportarPartidaXls(data: any) {
+    let ccp_id = data.ccp_id
 
-        // Agrega el enlace al DOM y haz clic en él
-        document.body.appendChild(link);
-        link.click();
+    const url = `https://webapp.mdsmp.gob.pe/cajachicabackend/public/v1/cajachica/gestion/caja-exportarvalppe?p_ccp_id=${ccp_id}`;
+    window.open(url, '_blank');
+  }
 
-        // Elimina el enlace del DOM después de la descarga
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(blobUrl);
-      },
-      (error: any) => {
-        // Maneja el error aquí
-        console.error('Error al exportar PDF:', error);
-        // Puedes mostrar un mensaje de error al usuario si lo deseas
-      }
-    );
+  exportarMovilidadXls(data: any) {
+    let ccp_id = data.ccp_id
+
+    const url = `https://webapp.mdsmp.gob.pe/cajachicabackend/public/v1/cajachica/gestion/caja-exportarvalmov?p_ccp_id=${ccp_id}`;
+    window.open(url, '_blank');
   }
 
   modalListarPeriodo(template: TemplateRef<any>, data: any) {
@@ -340,4 +334,9 @@ export class GestionCajachicaComponent implements OnInit {
       console.error('Error stringifying data:', error);
     }
   }
+
+  GenerarReporte(data: any) {
+
+  }
+
 }

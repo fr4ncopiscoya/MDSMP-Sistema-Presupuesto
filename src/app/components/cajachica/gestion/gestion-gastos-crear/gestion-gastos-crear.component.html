@@ -67,13 +67,17 @@
                 <label for="" class="form-label col-form-label col-form-label-sm">Número Doc.</label>
                 <div class="" style="display: flex;">
                     <div class="" style="width: 40%; margin-right: 5px;">
-                        <input id="" [(ngModel)]="ccm_numser" [ngClass]="{'disabled-color': btnVerData === false}"
-                            [disabled]="btnVerData === false" type="number" class="form-control form-control-sm">
+                        <input id="" [(ngModel)]="ccm_numser"
+                            [ngClass]="{'disabled-color': btnVerData === false || chkpin === 0}"
+                            [disabled]="btnVerData === false || chkpin === 0" type="number"
+                            class="form-control form-control-sm">
                     </div>
                     <div class="" style="padding-top: 5px;">-</div>
                     <div class="" style="margin-left: 5px;">
-                        <input id="" [(ngModel)]="ccm_numdoc" [ngClass]="{'disabled-color': btnVerData === false}"
-                            [disabled]="btnVerData === false" type="number" class="form-control form-control-sm">
+                        <input id="" [(ngModel)]="ccm_numdoc"
+                            [ngClass]="{'disabled-color': btnVerData === false || chkpin === 0}"
+                            [disabled]="btnVerData === false || chkpin === 0" type="number"
+                            class="form-control form-control-sm">
                     </div>
                 </div>
             </div>
@@ -116,7 +120,8 @@
         <div class="col-md-12 mb-2">
             <label for="" class="form-label col-form-label col-form-label-sm">Observacion</label>
             <input id="" [(ngModel)]="ccm_observ" [ngClass]="{'disabled-color': btnVerData === false}"
-                [disabled]="btnVerData === false" oninput="this.value = this.value.toUpperCase()" type="text" class="form-control form-control-sm">
+                [disabled]="btnVerData === false" oninput="this.value = this.value.toUpperCase()" type="text"
+                class="form-control form-control-sm">
         </div>
 
         <!-- Row7 -->

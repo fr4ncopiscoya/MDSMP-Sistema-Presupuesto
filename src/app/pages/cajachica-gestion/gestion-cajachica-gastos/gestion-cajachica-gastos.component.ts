@@ -106,7 +106,7 @@ export class GestionCajachicaGastosComponent implements OnInit {
       // paging: true,
       // pagingType: 'numbers',
       info: false,
-      scrollY: '500px',
+      scrollY: '350px',
       columnDefs: [
         // { width: '500px', targets: 4 },
       ],

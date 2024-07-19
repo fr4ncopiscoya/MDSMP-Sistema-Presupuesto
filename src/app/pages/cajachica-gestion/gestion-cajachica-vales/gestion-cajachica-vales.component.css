@@ -6,3 +6,12 @@ thead.table-light {
 tbody td {
     border: 1px solid #cecece;
 }
+
+#tablaAplicacion tbody tr {
+    height: 10px;
+    font-size: 14px;
+}
+
+#tablaAplicacion tbody td {
+    padding: 2px;
+}

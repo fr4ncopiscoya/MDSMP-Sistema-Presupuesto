@@ -67,3 +67,8 @@ tr {
 .dt-buttons {
     display: none;
 }
+
+select.form-select.form-select-sm {
+    text-align: right !important;
+    padding: 0px 4.2px !important;
+}

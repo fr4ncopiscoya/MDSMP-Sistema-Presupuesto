@@ -10,3 +10,12 @@ tbody td {
 .disabled-color {
     background-color: #e1e1e1;
 }
+
+#tablaAplicacion tbody tr {
+    height: 10px;
+    font-size: 14px;
+}
+
+#tablaAplicacion tbody td {
+    padding: 2px;
+}

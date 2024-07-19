@@ -26,6 +26,7 @@ export class GestionGastosCrearComponent implements OnInit {
   dataTipoDocIde: any;
 
 
+
   //Registrar
   ccm_id: number = 0;
   ccd_id: number = 0;
@@ -36,7 +37,7 @@ export class GestionGastosCrearComponent implements OnInit {
   ccv_id: number = 0;
   per_numdoi: string;
   ccm_numdoc: string;
-  ccm_numser: number;
+  ccm_numser: string;
   ccm_fecdoc: string;
   ccm_fecmov: string;
   ccm_descri: string;
@@ -54,6 +55,8 @@ export class GestionGastosCrearComponent implements OnInit {
   pen_apepat: string = '';
   pen_nombre: string = '';
   pej_razsoc: string = '';
+
+  chkpin: number;
 
   txt_button: string;
   mensa: string;
@@ -165,7 +168,16 @@ export class GestionGastosCrearComponent implements OnInit {
   }
 
   onSelectionChangeTipDoc(event: any) {
+    this.ccm_numser = ''
+    this.ccm_numdoc = ''
     this.ccd_id = event.ccd_id
+    this.chkpin = event.ccd_chkpin
+    console.log("chkpin: ", this.chkpin);
+
+    if (this.chkpin !== 0) {
+      this.ccm_numser = ''
+      this.ccm_numdoc = ''
+    }
   }
 
   onSelectionChangeRubro(event: any) {

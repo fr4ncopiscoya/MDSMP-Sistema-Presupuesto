@@ -16,6 +16,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  componenteListo = false;
   ip: string = '';
 
   error: string = '';
@@ -48,7 +49,9 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     // this.getIp()
     // console.log(this.ip);
-
+    setTimeout(() => {
+      this.componenteListo = true;
+    }, 300);
   }
 
   private errorSweetAlertCode(icon: 'error' | 'warning' | 'info' | 'success' = 'error') {
