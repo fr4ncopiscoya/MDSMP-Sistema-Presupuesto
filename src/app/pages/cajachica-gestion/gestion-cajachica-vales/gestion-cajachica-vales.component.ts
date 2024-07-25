@@ -65,15 +65,16 @@ export class GestionCajachicaValesComponent implements OnInit {
   ccv_id: number = 0;
   ccv_monval: string = ''
   ccv_observ: string = ''
-  
+
   mensa: string = ''
-  
+
   btnVerData: boolean;
   text_vales: string = ''
-  
+
   //Datos de tabla superior
   monto_vale: number = 0;
   monto_gasto: number = 0;
+  monto_xre: number = 0;
 
   constructor(
     private appComponent: AppComponent,
@@ -269,8 +270,6 @@ export class GestionCajachicaValesComponent implements OnInit {
     this.cajachicaService.listarCajaVales(post).subscribe({
       next: (data: any) => {
         this.spinner.hide();
-        console.log(data);
-
         this.datosCajaChicaVales = data;
         this.calcularDatosVale(data);
 
@@ -285,22 +284,34 @@ export class GestionCajachicaValesComponent implements OnInit {
         console.log(error);
       },
     });
-
   }
-  
+
+  exportarVales() {
+    let ccp_id = this.datosCaja.ccp_id
+
+    const url = `https://webapp.mdsmp.gob.pe/cajachicabackend/public/v1/cajachica/gestion/caja-exportarvales?p_ccp_id=${ccp_id}`;
+    window.open(url, '_blank');
+  }
+
   calcularDatosVale(datos: any) {
+    console.log("datos - ", datos);
+
     let totalMonval = 0;
     let totalMongas = 0;
-  
+    let totalMonXre = 0;
+
     for (let i = 0; i < datos.length; i++) {
       totalMonval += parseFloat(datos[i].ccv_monval);
       totalMongas += parseFloat(datos[i].ccv_mongas);
+      totalMonXre += parseFloat(datos[i].ccv_monxre);
     }
     console.log(`Total de ccv_monval: ${totalMonval}`);
     console.log(`Total de ccv_mongas: ${totalMongas}`);
-  
-    this.monto_vale=totalMonval;
-    this.monto_gasto=totalMongas;
+    console.log(`Total de ccv_monxre: ${totalMongas}`);
+
+    this.monto_vale = totalMonval;
+    this.monto_gasto = totalMongas;
+    this.monto_xre = totalMonXre;
   }
 
   cerrarVale(ccv_id: number) {
